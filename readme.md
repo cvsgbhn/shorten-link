@@ -1,6 +1,6 @@
 Plan:
 - [X] skeleton 
-- [ ] receive and respond with full link
+- [X] receive and respond with full link
 - [ ] recearch hash
 - [ ] respond with shortened link
 - [ ] add basic db storage
