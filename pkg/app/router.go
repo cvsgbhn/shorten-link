@@ -8,7 +8,6 @@ import (
 	"shorten-link/pkg/app/controllers"
 )
 
-/* get port from environment */
 func getPort() string {
 	var port = os.Getenv("PORT")
 	if port == "" {
@@ -21,8 +20,8 @@ func getPort() string {
 func SetupRoutes() {
 	port := getPort()
 
-	/* Upload CSV action */
     http.HandleFunc("/shorten", controllers.ShortenLink)
+	//http.HandleFunc("/{shortenLink}", controllers.Redirect)
 
     http.ListenAndServe(port, nil)
 }
