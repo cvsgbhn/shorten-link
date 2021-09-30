@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"shorten-link/pkg/app/models"
+	"shorten-link/pkg/app/logic"
 
 	"encoding/json"
 	"net/http"
@@ -21,13 +22,13 @@ func ShortenLink(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-	existingLinks := models.GetFullLink(receivedLink.Initial)
+	existingLinks := models.GetByFullLink(receivedLink.Initial)
 
 	if len(existingLinks) > 0 {
 		fmt.Fprintf(w, existingLinks[0].Hash)
 	} else {
-		//createdLink := logic.ShortenLink()
-		//fmt.Fprintf(w, createdLink.Hash)
+		createdLink := logic.ShortenLink(receivedLink.Initial)
+		fmt.Fprintf(w, createdLink.Hash)
 	}
 
 }

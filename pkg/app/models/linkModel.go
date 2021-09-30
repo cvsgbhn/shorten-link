@@ -17,7 +17,7 @@ type LinkInfo struct {
 	ExpirationDate time.Time
 }
 
-func GetFullLink(fullLink string) ([]*LinkInfo) {
+func GetByFullLink(fullLink string) ([]*LinkInfo) {
 
 	links := make([]*LinkInfo, 0)
 
@@ -62,7 +62,7 @@ func GetFullLink(fullLink string) ([]*LinkInfo) {
 	return links
 }
 
-func GetShortenedLink(shortLink string) ([]*LinkInfo) {
+func GetByShortenedLink(shortLink string) ([]*LinkInfo) {
 
 	links := make([]*LinkInfo, 0)
 
