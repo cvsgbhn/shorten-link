@@ -3,13 +3,23 @@ package logic
 import (
 	"shorten-link/pkg/app/models"
 
-	"encoding/hex"
+	//"encoding/hex"
 	"crypto/md5"
 	"fmt"
 )
 
 func base62Convert(initNum []byte) string {
 	alphabet := "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+	result := ""
+	for _, i := range(initNum) {
+		for i > 0 {
+			r := i % 62
+			i /= 62
+			result = string(alphabet[r]) + result
+		}
+	}
+	return result
 }
 
 func ShortenLink(longLink string) models.LinkInfo {
@@ -19,10 +29,7 @@ func ShortenLink(longLink string) models.LinkInfo {
 	var newLink models.LinkInfo
 	newLink.OriginalUrl = longLink
 	for i := 0; i <= len(hashedLink[:])- 4; i++ {
-		fmt.Println(hex.EncodeToString(hashedLink[:]))
-		fmt.Println(hashedLink[:])
-		fmt.Println(string(hashedLink[:]))
-		tempHash := (hex.EncodeToString(hashedLink[:]))[i:i+4]
+		tempHash := base62Convert(hashedLink[:])[i:i+4]
 		checkHash := models.GetByShortenedLink(tempHash)
 		if len(checkHash) == 0 {
 			newLink.Hash = tempHash
