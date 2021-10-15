@@ -5,6 +5,7 @@ import (
 
 	//"encoding/hex"
 	"crypto/md5"
+	"time"
 	"fmt"
 )
 
@@ -28,6 +29,8 @@ func ShortenLink(longLink string) models.LinkInfo {
 
 	var newLink models.LinkInfo
 	newLink.OriginalUrl = longLink
+	newLink.CreationDate = time.Now()
+	newLink.ExpirationDate = (newLink.CreationDate).AddDate(0, 1, 0)
 	for i := 0; i <= len(hashedLink[:])- 4; i++ {
 		tempHash := base62Convert(hashedLink[:])[i:i+4]
 		checkHash := models.GetByShortenedLink(tempHash)
