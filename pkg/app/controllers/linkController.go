@@ -32,3 +32,10 @@ func ShortenLink(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+
+func RedirectLink(w http.ResponseWriter, r *http.Request) {
+	shortenedLink := r.URL.Path[1:]
+
+	fullLink := models.GetByShortenedLink(shortenedLink)
+	http.Redirect(w, r, fullLink[0].OriginalUrl, 301)
+}

@@ -21,7 +21,7 @@ func SetupRoutes() {
 	port := getPort()
 
     http.HandleFunc("/shorten", controllers.ShortenLink)
-	//http.HandleFunc("/{shortenLink}", controllers.Redirect)
+	http.HandleFunc("/", controllers.RedirectLink)
 
     http.ListenAndServe(port, nil)
 }
