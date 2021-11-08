@@ -22,20 +22,27 @@ func ShortenLink(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-	existingLinks := models.GetByFullLink(receivedLink.Initial)
-
-	if len(existingLinks) > 0 {
-		fmt.Fprintf(w, existingLinks[0].Hash)
+	if len(receivedLink.Initial) == 0 {
+		http.Error(w, "Can't create shortened version for void", 400)
 	} else {
-		createdLink := logic.ShortenLink(receivedLink.Initial)
-		fmt.Fprintf(w, createdLink.Hash)
-	}
+		existingLinks := models.GetByFullLink(receivedLink.Initial)
 
+		if len(existingLinks) > 0 {
+			fmt.Fprintf(w, existingLinks[0].Hash)
+		} else {
+			createdLink := logic.ShortenLink(receivedLink.Initial)
+			fmt.Fprintf(w, createdLink.Hash)
+		}
+	}
 }
 
 func RedirectLink(w http.ResponseWriter, r *http.Request) {
 	shortenedLink := r.URL.Path[1:]
 
 	fullLink := models.GetByShortenedLink(shortenedLink)
-	http.Redirect(w, r, fullLink[0].OriginalUrl, 301)
+	if len(fullLink) == 0 {
+		http.Error(w, "This link is non-existing or expired", 400)
+	} else {
+		http.Redirect(w, r, fullLink[0].OriginalUrl, 301)
+	}
 }

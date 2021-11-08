@@ -20,6 +20,7 @@ type LinkInfo struct {
 func GetByFullLink(fullLink string) ([]*LinkInfo) {
 
 	links := make([]*LinkInfo, 0)
+	currentDate := time.Now()
 
 	postgresDB, err := db.NewDB(db.BuildConfig())
 	if err != nil {
@@ -35,7 +36,8 @@ func GetByFullLink(fullLink string) ([]*LinkInfo) {
 			"expiration_date",
 		).
 		From("links").
-		Where(squirrel.Eq{"original_url": fullLink})
+		Where(squirrel.Eq{"original_url": fullLink}).
+		Where("expiration_date>=?", currentDate)
 
 		rows, err := sql.RunWith(postgresDB).Query()
 		if err != nil {
@@ -65,6 +67,7 @@ func GetByFullLink(fullLink string) ([]*LinkInfo) {
 func GetByShortenedLink(shortLink string) ([]*LinkInfo) {
 
 	links := make([]*LinkInfo, 0)
+	currentDate := time.Now()
 
 	postgresDB, err := db.NewDB(db.BuildConfig())
 	if err != nil {
@@ -80,7 +83,8 @@ func GetByShortenedLink(shortLink string) ([]*LinkInfo) {
 			"expiration_date",
 		).
 		From("links").
-		Where(squirrel.Eq{"hash": shortLink})
+		Where(squirrel.Eq{"hash": shortLink}).
+		Where("expiration_date>=?", currentDate)
 
 		rows, err := sql.RunWith(postgresDB).Query()
 		if err != nil {
@@ -117,14 +121,12 @@ func AddLink(newLink *LinkInfo) (id int, err error) {
 	sql := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar).
 		Insert("links").
 		Columns(
-			"id",
 			"hash",
 			"original_url",
 			"creation_date",
 			"expiration_date",
 		).
 		Values(
-			newLink.Id,
 			newLink.Hash,
 			newLink.OriginalUrl,
 			newLink.CreationDate,
