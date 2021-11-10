@@ -6,6 +6,7 @@ import (
 
 	"encoding/json"
 	"net/http"
+	"net/url"
 	"fmt"
 )
 
@@ -24,15 +25,22 @@ func ShortenLink(w http.ResponseWriter, r *http.Request) {
 
 	if len(receivedLink.Initial) == 0 {
 		http.Error(w, "Can't create shortened version for void", 400)
-	} else {
-		existingLinks := models.GetByFullLink(receivedLink.Initial)
+		return
+	}
 
-		if len(existingLinks) > 0 {
-			fmt.Fprintf(w, existingLinks[0].Hash)
-		} else {
-			createdLink := logic.ShortenLink(receivedLink.Initial)
-			fmt.Fprintf(w, createdLink.Hash)
-		}
+	validUrl, err := url.ParseRequestURI(receivedLink.Initial)
+	if len(validUrl.Host) == 0 || validUrl == nil || err != nil{
+		http.Error(w, "Incorrect URL format", 400)
+		return
+	} 
+	
+	existingLinks := models.GetByFullLink(receivedLink.Initial)
+
+	if len(existingLinks) > 0 {
+		fmt.Fprintf(w, existingLinks[0].Hash)
+	} else {
+		createdLink := logic.ShortenLink(receivedLink.Initial)
+		fmt.Fprintf(w, createdLink.Hash)
 	}
 }
 

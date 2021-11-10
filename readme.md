@@ -7,7 +7,7 @@ Plan:
 - [X] check if link has already been shortened
 - [X] handle errors: non-existing shortened link
 - [X] handle errors: empty original link
-- [ ] handle errors: check valid url
+- [X] handle errors: check valid url
 - [ ] API documentation
 - [ ] tests
 - [ ] dockerize
