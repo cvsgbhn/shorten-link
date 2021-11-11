@@ -20,7 +20,7 @@ func getPort() string {
 func SetupRoutes() {
 	port := getPort()
 
-    http.HandleFunc("/shorten", controllers.ShortenLink)
+    http.HandleFunc("/shorten", controllers.ShortenHandler)
 	http.HandleFunc("/", controllers.RedirectLink)
 
     http.ListenAndServe(port, nil)

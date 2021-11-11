@@ -23,6 +23,9 @@ func base62Convert(initNum []byte) string {
 	return result
 }
 
+/*
+Generates hash for original link and returns its unique part  
+*/
 func ShortenLink(longLink string) models.LinkInfo {
 	data := []byte(longLink)
 	hashedLink := md5.Sum(data)

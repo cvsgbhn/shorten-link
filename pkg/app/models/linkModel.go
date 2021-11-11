@@ -17,6 +17,9 @@ type LinkInfo struct {
 	ExpirationDate time.Time
 }
 
+/*
+Selects all not expired shortened links for a given full one
+*/
 func GetByFullLink(fullLink string) ([]*LinkInfo) {
 
 	links := make([]*LinkInfo, 0)
@@ -64,6 +67,9 @@ func GetByFullLink(fullLink string) ([]*LinkInfo) {
 	return links
 }
 
+/*
+Selects all not expired shortened links matching a given one
+*/
 func GetByShortenedLink(shortLink string) ([]*LinkInfo) {
 
 	links := make([]*LinkInfo, 0)
@@ -111,6 +117,9 @@ func GetByShortenedLink(shortLink string) ([]*LinkInfo) {
 	return links
 }
 
+/*
+Inserts a new link
+*/
 func AddLink(newLink *LinkInfo) (id int, err error) {
 
 	postgresDB, err := db.NewDB(db.BuildConfig())

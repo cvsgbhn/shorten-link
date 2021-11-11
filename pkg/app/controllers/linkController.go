@@ -14,7 +14,10 @@ type Link struct {
 	Initial string
 }
 
-func ShortenLink(w http.ResponseWriter, r *http.Request) {
+/*
+Receives full link, validates and processes it 
+*/
+func ShortenHandler(w http.ResponseWriter, r *http.Request) {
 	var receivedLink Link
 
 	err := json.NewDecoder(r.Body).Decode(&receivedLink)
@@ -44,6 +47,9 @@ func ShortenLink(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+/*
+Receives shortened link, validates and redirects to original one
+*/
 func RedirectLink(w http.ResponseWriter, r *http.Request) {
 	shortenedLink := r.URL.Path[1:]
 

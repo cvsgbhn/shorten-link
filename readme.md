@@ -1,15 +1,26 @@
-Plan:
-- [X] skeleton (~15 min)
-- [X] receive and respond with full link (~30 min)
-- [X] research hash (~1 hr)
+## Run project
+`go run cmd/app/main.go`
+
+## Run API documentation:
+`godoc -goroot /home/path/to/the/project`
+
+find the documentation here: `http://localhost:6060/pkg/shorten-link/`
+
+## Plan:
+### Done
+- [X] skeleton
+- [X] receive and respond with full link
+- [X] research hash
 - [X] respond with shortened link
-- [X] add db (<1 hr)
+- [X] add db
 - [X] check if link has already been shortened
 - [X] handle errors: non-existing shortened link
 - [X] handle errors: empty original link
 - [X] handle errors: check valid url
-- [ ] API documentation
+- [X] godoc documentation
+### ToDos:
 - [ ] tests
+- [ ] migrations
 - [ ] dockerize
 - [ ] grpc
 
