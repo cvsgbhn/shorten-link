@@ -18,9 +18,10 @@ find the documentation here: `http://localhost:6060/pkg/shorten-link/`
 - [X] handle errors: empty original link
 - [X] handle errors: check valid url
 - [X] godoc documentation
+- [X] simple test
 ### ToDos:
-- [ ] tests
 - [ ] migrations
 - [ ] dockerize
+- [ ] more complicateed tests with mocking or creating/killing specific db
 - [ ] grpc
 

@@ -37,7 +37,6 @@ func ShortenLink(longLink string) models.LinkInfo {
 	for i := 0; i <= len(hashedLink[:])- 4; i++ {
 		tempHash := base62Convert(hashedLink[:])[i:i+4]
 		checkHash := models.GetByShortenedLink(tempHash)
-		fmt.Println(checkHash)
 		if len(checkHash) == 0 {
 			newLink.Hash = tempHash
 			models.AddLink(&newLink)
