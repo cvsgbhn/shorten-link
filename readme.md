@@ -6,6 +6,9 @@
 
 find the documentation here: `http://localhost:6060/pkg/shorten-link/`
 
+## Run Tests
+`go test -v shorten-link/tests`
+
 ## Plan:
 ### Done
 - [X] skeleton
