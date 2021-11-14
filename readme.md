@@ -9,6 +9,9 @@ find the documentation here: `http://localhost:6060/pkg/shorten-link/`
 ## Run Tests
 `go test -v shorten-link/tests`
 
+## Example of running migrations with [golang-migrate](https://github.com/golang-migrate/migrate) tool
+`migrate -database postgres://dev:dev@localhost:5432/shorter -path pkg/db/migrations up 1`
+
 ## Plan:
 ### Done
 - [X] skeleton
@@ -25,6 +28,6 @@ find the documentation here: `http://localhost:6060/pkg/shorten-link/`
 ### ToDos:
 - [ ] migrations
 - [ ] dockerize
-- [ ] more complicateed tests with mocking or creating/killing specific db
+- [ ] more complicated tests with mocking or creating/killing specific db
 - [ ] grpc
 
