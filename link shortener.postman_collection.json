@@ -1,0 +1,68 @@
+{
+	"info": {
+		"_postman_id": "04207a07-8e4b-4c17-8181-4cfbfda5ab3b",
+		"name": "link shortener",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/shorten",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"initial\" : \"https://www.youtube.com/channel/UCUSbYJK87rpBUJ5KGQd7oHA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/shorten",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shorten"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/shortenlink",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"initial\" : \"https://www.youtube.com/watch?v=FFO_Bqe6xuI&list=PLTqXSsmNS_QJwf0ibjEHY0z0ECdD_m6u5&index=4\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/4327",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"4327"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

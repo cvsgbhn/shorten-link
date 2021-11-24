@@ -12,6 +12,18 @@ find the documentation here: `http://localhost:6060/pkg/shorten-link/`
 ## Example of running migrations with [golang-migrate](https://github.com/golang-migrate/migrate) tool
 `migrate -database postgres://dev:dev@localhost:5432/shorter -path pkg/db/migrations up 1`
 
+## Docker
+
+### Build docker image
+```bash
+docker build --tag docker-app .
+```
+
+### Run docker container
+```bash
+docker run -p 8080:8080 docker-app
+```
+
 ## Plan:
 ### Done
 - [X] skeleton
