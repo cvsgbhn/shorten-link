@@ -6,6 +6,8 @@ import (
 	"log"
 
 	"shorten-link/pkg/app/controllers"
+	"github.com/go-redis/redis"
+	"shorten-link/pkg/db"
 )
 
 func getPort() string {
@@ -17,11 +19,33 @@ func getPort() string {
 	return ":" + port
 }
 
-func SetupRoutes() {
+func SetupRoutes(dbType string) {
+
+	var pgClient *db.DB
+	var rdClients []*redis.Client
+	
+	switch dbType {
+		case "r":
+			log.Println("redis")
+			rdClients = db.RedisTwoTables()
+		case "p":
+			log.Println("postgres")
+			pgClient = db.NewDB(db.BuildConfig())
+		default:
+			log.Println("Please, specify database type: redis (r) or postgres (p)")
+			return
+	}
+
+	defer pgClient.Close()
+
 	port := getPort()
 
-    http.HandleFunc("/shorten", controllers.ShortenHandler)
-	http.HandleFunc("/", controllers.RedirectLink)
+    http.HandleFunc("/shorten", func(w http.ResponseWriter, r *http.Request) { 
+		controllers.ShortenHandler(w, r, pgClient, rdClients) 
+	})
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		controllers.RedirectLink(w, r, pgClient, rdClients)
+	})
 
     http.ListenAndServe(port, nil)
 }

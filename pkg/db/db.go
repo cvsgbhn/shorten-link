@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"os"
 	"time"
+
+	"github.com/go-redis/redis"
 )
 
 const (
@@ -19,20 +21,40 @@ type DB struct {
 	config *Config
 }
 
-func NewDB(config *Config) (*DB, error) {
+type DBClient interface{
+	GetByFullLink()
+	GetByShortenedLink()
+}
+
+func RedisClient(db int) *redis.Client {
+	client := redis.NewClient(&redis.Options{
+		Addr:     "localhost:6379",
+		Password: "",
+		DB:       db,
+	})
+
+	fmt.Println("redis client: ", client)
+	return client
+}
+
+func RedisTwoTables() []*redis.Client {
+	return []*redis.Client{RedisClient(0), RedisClient(1)}
+}
+
+func NewDB(config *Config) (*DB) {
 	db, err := sql.Open("postgres", config.BuildDsn())
 	if err != nil {
-		return nil, err
+		return nil
 	}
 
 	if err = db.Ping(); err != nil {
-		return nil, err
+		return nil
 	}
 
 	return &DB{
 		DB:     db,
 		config: config,
-	}, nil
+	}
 }
 
 type Config struct {
@@ -62,7 +84,7 @@ func (db *DB) Close() error {
 
 func BuildConfig() *Config {
 	var config *Config
-	file, err := os.Open("config.development.json")
+	file, err := os.Open("config.postgres.json")
 	if err != nil {
 		fmt.Println(err)
 		return nil
