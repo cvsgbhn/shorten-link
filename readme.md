@@ -12,6 +12,25 @@ find the documentation here: `http://localhost:6060/pkg/shorten-link/`
 ## Example of running migrations with [golang-migrate](https://github.com/golang-migrate/migrate) tool
 `migrate -database postgres://dev:dev@localhost:5432/shorter -path pkg/db/migrations up 1`
 
+## Run app in Docker (DB is not included in image)
+```
+docker build --tag docker-app . --build-arg db=p
+docker run -p 8080:8080 docker-app
+
+```
+
+## Run with docker-compose
+```
+docker-compose -f docker-compose.yml up --build app-postgres
+docker-compose -f docker-compose.yml up -d --force-recreate db-postgres
+
+dokcer ps
+docker exec -it <container_id> bash
+docker-compose down --volumes ; docker-compose up -d
+
+docker-compose up -d app-postgres
+```
+
 ## Plan:
 ### Done
 - [X] skeleton

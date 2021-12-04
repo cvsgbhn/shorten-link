@@ -1,0 +1,55 @@
+version: '2.4'
+services:
+  db-postgres:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - 15433:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready -U postgres -h 127.0.0.1
+      interval: 1s
+  
+  app-redis:
+    # image: docker-app:tag
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        db: r
+    ports:
+      - 18000:8080
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  app-postgres:
+    # image: docker-app:tag
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        db: p
+    ports:
+      - 18001:8080
+    depends_on:
+      db-postgres:
+        condition: service_healthy
+
+  redis:
+    image: redis:6-alpine
+    volumes:
+      - redis:/data
+    ports:
+      - "16379:6379"
+    healthcheck:
+      test: redis-cli ping
+      interval: 1s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  db-data:
+  redis:

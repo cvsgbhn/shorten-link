@@ -23,6 +23,8 @@ func SetupRoutes(dbType string) {
 
 	var pgClient *db.DB
 	var rdClients []*redis.Client
+
+	port := getPort()
 	
 	switch dbType {
 		case "r":
@@ -31,14 +33,13 @@ func SetupRoutes(dbType string) {
 		case "p":
 			log.Println("postgres")
 			pgClient = db.NewDB(db.BuildConfig())
+			log.Println("Connection to db happened:", pgClient)
 		default:
 			log.Println("Please, specify database type: redis (r) or postgres (p)")
 			return
 	}
 
 	defer pgClient.Close()
-
-	port := getPort()
 
     http.HandleFunc("/shorten", func(w http.ResponseWriter, r *http.Request) { 
 		controllers.ShortenHandler(w, r, pgClient, rdClients) 
