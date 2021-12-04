@@ -23,8 +23,6 @@ func SetupRoutes(dbType string) {
 
 	var pgClient *db.DB
 	var rdClients []*redis.Client
-
-	port := getPort()
 	
 	switch dbType {
 		case "r":
@@ -38,6 +36,8 @@ func SetupRoutes(dbType string) {
 			log.Println("Please, specify database type: redis (r) or postgres (p)")
 			return
 	}
+
+	port := getPort()
 
 	defer pgClient.Close()
 

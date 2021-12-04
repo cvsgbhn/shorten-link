@@ -68,12 +68,10 @@ type Config struct {
 
 func (dc *Config) BuildDsn() string {
 	return fmt.Sprintf(
-		"host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+		"host=%s port=%s user=%s sslmode=%s",
 		dc.Host,
 		dc.Port,
 		dc.User,
-		dc.Pass,
-		dc.Database,
 		dc.SSLMode,
 	)
 }
