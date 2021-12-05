@@ -11,11 +11,12 @@ import (
 func main() {
 	m, err := migrate.New(
 		"file://pkg/db/migrations",
-		"postgres://postgres:postgres@localhost:5432/db-postgres?sslmode=disable")
+		"postgres://postgres:postgres@db-postgres:5432/postgres?sslmode=disable")
 	if err != nil {
 		log.Fatal(err)
 	}
 	if err := m.Up(); err != nil {
 		log.Fatal(err)
 	}
+	log.Println("MIGRATIONS done")
 }
