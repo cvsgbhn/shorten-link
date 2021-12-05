@@ -22,7 +22,7 @@ services:
     ports:
       - 18000:8080
     depends_on:
-      redis:
+      db-redis:
         condition: service_healthy
 
   app-postgres:
@@ -38,7 +38,7 @@ services:
       db-postgres:
         condition: service_healthy
 
-  redis:
+  db-redis:
     image: redis:6-alpine
     volumes:
       - redis:/data

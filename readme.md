@@ -1,50 +1,30 @@
-## Run project
-`go run cmd/app/main.go`
-
-## Run API documentation:
-`godoc -goroot /home/path/to/the/project`
-
-find the documentation here: `http://localhost:6060/pkg/shorten-link/`
-
-## Run Tests
-`go test -v shorten-link/tests`
-
-## Example of running migrations with [golang-migrate](https://github.com/golang-migrate/migrate) tool
-`migrate -database postgres://dev:dev@localhost:5432/shorter -path pkg/db/migrations up 1`
-
-## Run app in Docker (DB is not included in image)
+## Run project with postgres
 ```
-docker build --tag docker-app . --build-arg db=p
-docker run -p 8080:8080 docker-app
-
+make build-postgres
+make start-with-postgres
 ```
 
-## Run with docker-compose
+## Run project with redis
 ```
-docker-compose -f docker-compose.yml up --build app-postgres
-docker-compose -f docker-compose.yml up -d --force-recreate db-postgres
-
-dokcer ps
-docker exec -it <container_id> bash
-docker-compose down --volumes ; docker-compose up -d
-
-docker-compose up -d app-postgres
+make build-redis
+make start-with-redis
 ```
 
-## Plan:
-### Done
-- [X] skeleton
-- [X] receive and respond with full link
-- [X] research hash
-- [X] respond with shortened link
-- [X] add db
-- [X] check if link has already been shortened
-- [X] handle errors: non-existing shortened link
-- [X] handle errors: empty original link
-- [X] handle errors: check valid url
-- [X] godoc documentation
-- [X] simple test
-### ToDos:
-- [ ] migrations
-- [ ] dockerize
-- [ ] more complicated tests with mocking or creating/killing specific db
+## Examples of manual testing
+### Postgres:
+```
+make -s manual-test-postgres https://www.google.com
+```
+### Redis:
+```
+make -s manual-test-redis https://www.google.com
+```
+### Expected output:
+```
+http://localhost:18001/z3p3O2Ma21
+```
+
+## Shut down all
+```
+make stop
+```

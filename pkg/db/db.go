@@ -28,7 +28,7 @@ type DBClient interface{
 
 func RedisClient(db int) *redis.Client {
 	client := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
+		Addr:     "db-redis:6379",
 		Password: "",
 		DB:       db,
 	})

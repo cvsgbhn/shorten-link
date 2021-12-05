@@ -28,6 +28,7 @@ func SetupRoutes(dbType string) {
 		case "r":
 			log.Println("redis")
 			rdClients = db.RedisTwoTables()
+			log.Println("Connection to db happened:", rdClients)
 		case "p":
 			log.Println("postgres")
 			pgClient = db.NewDB(db.BuildConfig())
