@@ -1,0 +1,8 @@
+{
+    "Host": "db-postgres",
+    "Port": "5432",
+    "User": "postgres",
+    "Pass": "dev",
+    "Database": "shorter",
+    "SSLMode": "disable"
+}

@@ -60,6 +60,18 @@ services:
       db-postgres:
         condition: service_healthy
 
+  tests:
+    build:
+      context: ./
+      dockerfile: tests/Dockerfile
+    ports:
+      - 18003:8080
+    depends_on:
+      db-postgres:
+        condition: service_healthy
+    command: sh -c "go test -v ./tests"
+    
+
 volumes:
   db-data:
   redis:

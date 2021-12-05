@@ -2,6 +2,7 @@
 ```
 make build-postgres
 make start-with-postgres
+make migrations
 ```
 
 ## Run project with redis

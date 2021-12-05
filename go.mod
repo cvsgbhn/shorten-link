@@ -9,5 +9,6 @@ require (
 	github.com/golang-migrate/migrate/v4 v4.15.1
 	github.com/jinzhu/gorm v1.9.16
 	github.com/lib/pq v1.10.3
+	github.com/stretchr/testify v1.7.0
 	golang.org/x/tools v0.1.7 // indirect
 )
