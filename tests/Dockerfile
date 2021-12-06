@@ -9,12 +9,16 @@ WORKDIR /app
 COPY go.mod ./
 COPY go.sum ./
 
+RUN ls -al
+
 RUN go mod download
 
 COPY . .
 
-RUN GOOS=linux CGO_ENABLED=0 go build -o docker-app cmd/app/main.go 
+#RUN GOOS=linux CGO_ENABLED=0 go build -o docker-app cmd/app/main.go 
 RUN ls -al
 
 #ENTRYPOINT ["sh", "./docker-params.sh"]
-ENTRYPOINT ./docker-app p
+#ENTRYPOINT ./docker-app p
+
+CMD GO111MODULE=auto GOOS=linux CGO_ENABLED=0 go build -o docker-app cmd/app/main.go && ./docker-app

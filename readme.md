@@ -29,3 +29,18 @@ http://localhost:18001/z3p3O2Ma21
 ```
 make stop
 ```
+
+### Example of POST request:
+```
+http://localhost:18001/shorten
+```
+with JSON:
+```
+{
+    "initial" : "https://www.youtube.com/"
+}
+```
+### Example of GET request:
+```
+http://localhost:18001/${received shortened hash}
+```
